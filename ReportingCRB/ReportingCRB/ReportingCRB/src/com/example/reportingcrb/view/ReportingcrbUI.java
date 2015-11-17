@@ -26,10 +26,12 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.Align;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -47,12 +49,17 @@ public class ReportingcrbUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		
-		final GridLayout layout = new GridLayout(4,4);
-		layout.setMargin(true);
-		setContent(layout);
+		final HorizontalLayout hlayout = new HorizontalLayout();
+		
+		getPage().setTitle("CRBs_per_customer");
+		
+		hlayout.setMargin(true);
+		hlayout.setSpacing(true);
+		setContent(hlayout);
 
-		Table table = new Table("Priority Cr's");
-
+		Table table = new Table();
+		table.addStyleName("priority_table");
+		
 		// Define two columns for the built-in container
 		table.addContainerProperty("Priority", String.class, null);
 		table.addContainerProperty("Count", Integer.class, null);
@@ -133,13 +140,10 @@ public class ReportingcrbUI extends UI {
 
 		chart.drawChart(conf);
 		chart2.drawChart(conf2);
-
 		table.setPageLength(table.size());
-		layout.addComponent(table,2,2,2,2);
-		layout.addComponent(chart,0,0,0,0);
+		hlayout.addComponent(table);
+		hlayout.addComponent(chart);
 		
-		layout.addComponent(chart2,1,1,1,1);
-		setSizeUndefined();  
 	}
 
 }
